@@ -1137,7 +1137,6 @@ elif menu == "🔍 Konvolusi & Filter":
         elif filter_pilihan == "Sharpening Kuat":
             _kernel_viz = np.array([[-1,-1,-1],[-1,9,-1],[-1,-1,-1]], dtype=np.float32)
         elif filter_pilihan == "Edge Detection Sobel":
-<<<<<<< HEAD
             _kernel_viz = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)  # Gx (horizontal)
         else:
             _kernel_viz = np.array([[-1,0,1],[-1,0,1],[-1,0,1]], dtype=np.float32)  # Gx (horizontal)
@@ -1146,12 +1145,6 @@ elif menu == "🔍 Konvolusi & Filter":
         if filter_pilihan in ("Edge Detection Sobel", "Edge Detection Prewitt"):
             _nama_viz = filter_pilihan + " (Kernel Gx — arah horizontal)"
         tampilkan_matriks_konvolusi(img_array, hasil, _kernel_viz, _nama_viz)
-=======
-            _kernel_viz = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)
-        else:
-            _kernel_viz = np.array([[-1,0,1],[-1,0,1],[-1,0,1]], dtype=np.float32)
-        tampilkan_matriks_konvolusi(img_array, hasil, _kernel_viz, filter_pilihan)
->>>>>>> 6a7b541bfb5a1ec24e238ac21acb4151762d2686
     else:
         no_image()
 
