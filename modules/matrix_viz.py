@@ -104,7 +104,6 @@ def _matrix_to_html(matrix: np.ndarray,
                 f'text-align:center;font-size:{font_size};'
                 f'min-width:32px;border-radius:4px;">'
                 f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
-                f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
             )
             cells.append(cell)
         rows_html.append("<tr>" + "".join(cells) + "</tr>")
@@ -172,7 +171,6 @@ def _matrix_to_html_indexed(matrix: np.ndarray,
                 f'border:{border};padding:4px 5px;'
                 f'text-align:center;font-size:{font_size};'
                 f'min-width:30px;border-radius:4px;">'
-                f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
                 f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
             )
             cells.append(cell)
