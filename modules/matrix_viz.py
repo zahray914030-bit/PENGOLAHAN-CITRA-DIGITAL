@@ -13,10 +13,7 @@ PENTING:
 
 import numpy as np
 import streamlit as st
-<<<<<<< HEAD
 import pandas as pd
-=======
->>>>>>> de0e50d (perbaiki error)
 
 # ── Konstanta tampilan ─────────────────────────────────────────────────────────
 MAX_DIM = 12          # Ukuran maksimum baris/kolom matriks yang ditampilkan
@@ -106,19 +103,8 @@ def _matrix_to_html(matrix: np.ndarray,
                 f'border:{border};padding:4px 6px;'
                 f'text-align:center;font-size:{font_size};'
                 f'min-width:32px;border-radius:4px;">'
-<<<<<<< HEAD
-<<<<<<< HEAD
                 f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
-=======
-<<<<<<< HEAD
                 f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
-=======
-                f'{int(val)}</td>'
->>>>>>> 6a7b541bfb5a1ec24e238ac21acb4151762d2686
->>>>>>> ff1b6e8435dab4fa42c9203bd0444c83af2fcd00
-=======
-                f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
->>>>>>> de0e50d (perbaiki error)
             )
             cells.append(cell)
         rows_html.append("<tr>" + "".join(cells) + "</tr>")
@@ -186,19 +172,8 @@ def _matrix_to_html_indexed(matrix: np.ndarray,
                 f'border:{border};padding:4px 5px;'
                 f'text-align:center;font-size:{font_size};'
                 f'min-width:30px;border-radius:4px;">'
-<<<<<<< HEAD
-<<<<<<< HEAD
                 f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
-=======
-<<<<<<< HEAD
                 f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
-=======
-                f'{int(val)}</td>'
->>>>>>> 6a7b541bfb5a1ec24e238ac21acb4151762d2686
->>>>>>> ff1b6e8435dab4fa42c9203bd0444c83af2fcd00
-=======
-                f'{int(val) if val == int(val) else round(float(val), 4)}</td>'
->>>>>>> de0e50d (perbaiki error)
             )
             cells.append(cell)
         rows_html.append("<tr>" + "".join(cells) + "</tr>")
@@ -417,19 +392,8 @@ def tampilkan_matriks_konvolusi(arr_asli: np.ndarray, arr_hasil: np.ndarray,
             f"Kernel {nama_filter} ({kh}×{kw})",
             _matrix_to_html(kernel_int,
                             font_size="0.82rem"),
-<<<<<<< HEAD
-<<<<<<< HEAD
             f"Kernel diterapkan ke setiap piksel gambar. Untuk Sobel/Prewitt: hasil akhir = √(Gx² + Gy²).",
-=======
-<<<<<<< HEAD
             f"Kernel diterapkan ke setiap piksel gambar. Untuk Sobel/Prewitt: hasil akhir = √(Gx² + Gy²).",
-=======
-            f"Kernel diterapkan ke setiap piksel gambar.",
->>>>>>> 6a7b541bfb5a1ec24e238ac21acb4151762d2686
->>>>>>> ff1b6e8435dab4fa42c9203bd0444c83af2fcd00
-=======
-            f"Kernel diterapkan ke setiap piksel gambar. Untuk Sobel/Prewitt: hasil akhir = √(Gx² + Gy²).",
->>>>>>> de0e50d (perbaiki error)
             accent="#A97CF8"
         )
 
@@ -455,13 +419,6 @@ def tampilkan_matriks_konvolusi(arr_asli: np.ndarray, arr_hasil: np.ndarray,
             total += product
             terms.append(f"{int(pv)}×({kv:g})")
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> ff1b6e8435dab4fa42c9203bd0444c83af2fcd00
-=======
->>>>>>> de0e50d (perbaiki error)
     # Gabungkan formula: pisahkan dengan " + " tapi hindari "+ -" 
     formula_parts = []
     for i, t in enumerate(terms):
@@ -472,15 +429,6 @@ def tampilkan_matriks_konvolusi(arr_asli: np.ndarray, arr_hasil: np.ndarray,
         else:
             formula_parts.append(" + " + t)
     formula = "".join(formula_parts)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-    formula = " + ".join(terms)
->>>>>>> 6a7b541bfb5a1ec24e238ac21acb4151762d2686
->>>>>>> ff1b6e8435dab4fa42c9203bd0444c83af2fcd00
-=======
->>>>>>> de0e50d (perbaiki error)
     result_val = int(np.clip(total, 0, 255))
     st.markdown(
         f'<div style="background:white;border-radius:8px;padding:.6rem .9rem;'
@@ -608,13 +556,6 @@ def tampilkan_matriks_morfologi(arr_asli: np.ndarray, arr_hasil: np.ndarray,
     if nama_operasi in ("Erosi", "Opening"):
         op_label = "MIN"
         op_result = min(patch_vals) if patch_vals else "—"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> ff1b6e8435dab4fa42c9203bd0444c83af2fcd00
-=======
->>>>>>> de0e50d (perbaiki error)
         if nama_operasi == "Erosi":
             op_desc = "Erosi: ambil nilai <b>minimum</b> piksel di area aktif SE."
         else:  # Opening
@@ -626,19 +567,6 @@ def tampilkan_matriks_morfologi(arr_asli: np.ndarray, arr_hasil: np.ndarray,
             op_desc = "Dilasi: ambil nilai <b>maksimum</b> piksel di area aktif SE."
         else:  # Closing
             op_desc = "Closing = Dilasi → Erosi. Tahap 1 (Dilasi): ambil nilai <b>maksimum</b> piksel di area aktif SE."
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-        op_desc = "Erosi mengambil nilai <b>minimum</b> piksel di area aktif SE."
-    else:  # Dilasi, Closing
-        op_label = "MAX"
-        op_result = max(patch_vals) if patch_vals else "—"
-        op_desc = "Dilasi mengambil nilai <b>maksimum</b> piksel di area aktif SE."
->>>>>>> 6a7b541bfb5a1ec24e238ac21acb4151762d2686
->>>>>>> ff1b6e8435dab4fa42c9203bd0444c83af2fcd00
-=======
->>>>>>> de0e50d (perbaiki error)
 
     vals_str = ", ".join(str(v) for v in patch_vals) if patch_vals else "—"
 
