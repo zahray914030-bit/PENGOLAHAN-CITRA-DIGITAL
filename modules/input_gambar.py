@@ -3,14 +3,15 @@ from PIL import Image
 import numpy as np
 import cv2
 
-def load_gambar():
+def load_gambar(key="upload_gambar"):
     """Fungsi untuk upload dan load gambar"""
     uploaded_file = st.file_uploader(
         "Upload Gambar", 
         type=["jpg", "jpeg", "png", "bmp"],
-        help="Format yang didukung: JPG, JPEG, PNG, BMP"
+        help="Format yang didukung: JPG, JPEG, PNG, BMP",
         key=key
     )
+
     
     if uploaded_file is not None:
         # Baca gambar menggunakan PIL
