@@ -64,35 +64,6 @@ def dilasi(img_array, se_type="silang"):
     hasil = cv2.dilate(gray, se, iterations=1)
     return hasil
 
-def opening(img_array, se_type="silang"):
-    """Operasi Opening - erosi lalu dilasi"""
-    if img_array is None:
-        return None
-    
-    se = pilih_se(se_type)
-    
-    if len(img_array.shape) == 3:
-        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
-    else:
-        gray = img_array
-    
-    hasil = cv2.morphologyEx(gray, cv2.MORPH_OPEN, se)
-    return hasil
-
-def closing(img_array, se_type="silang"):
-    """Operasi Closing - dilasi lalu erosi"""
-    if img_array is None:
-        return None
-    
-    se = pilih_se(se_type)
-    
-    if len(img_array.shape) == 3:
-        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
-    else:
-        gray = img_array
-    
-    hasil = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, se)
-    return hasil
 
 def pilih_se(se_type):
     """Fungsi memilih elemen penstruktur"""
