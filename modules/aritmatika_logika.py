@@ -19,7 +19,8 @@ def operasi_perkalian(img_array, nilai=1.5):
     """Mengalikan nilai piksel gambar"""
     if img_array is None:
         return None
-    hasil = cv2.multiply(img_array, np.ones(img_array.shape, dtype=np.float32) * nilai)
+    img_float = img_array.astype(np.float32)
+    hasil = cv2.multiply(img_float, np.ones(img_array.shape, dtype=np.float32) * nilai)
     hasil = np.clip(hasil, 0, 255).astype(np.uint8)
     return hasil
 
