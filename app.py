@@ -9,7 +9,16 @@ from modules.aritmatika_logika import (operasi_penjumlahan, operasi_pengurangan,
                                         operasi_not, operasi_xor)
 from modules.histogram import tampilkan_histogram
 from modules.konvolusi import filter_mean, filter_sharpening, filter_sobel, filter_prewitt
-from modules.morfologi import erosi, dilasi, opening, closing
+from modules.morfologi import erosi, dilasi, opening, closing, pilih_se
+
+# ── Visualisasi Matriks Piksel (media pembelajaran — tidak mengubah logika) ──
+from modules.matrix_viz import (
+    tampilkan_matriks_dasar,
+    tampilkan_matriks_konvolusi,
+    tampilkan_matriks_morfologi,
+    tampilkan_matriks_histogram,
+    tampilkan_matriks_dua_input,
+)
 
 # ── Konfigurasi halaman ──────────────────────────────────────────
 st.set_page_config(
@@ -883,6 +892,11 @@ elif menu == "📁 Input & Tampilkan Gambar":
         tampilkan_gambar(image, f"Gambar Asli — {filename}")
         get_info_gambar(img_array)
         st.markdown('</div>', unsafe_allow_html=True)
+
+        # ── [+] Visualisasi Matriks Piksel (tambahan media pembelajaran) ──
+        tampilkan_matriks_dasar(img_array, None,
+                                label_asli="Matriks Citra Asli",
+                                label_hasil="")
     else:
         no_image()
 
@@ -921,6 +935,13 @@ elif menu == "🎨 Grayscale & Citra Biner":
                 img_lbl(f"Hasil Biner Otsu (T={t_val:.0f})")
                 st.image(hasil, use_column_width=True, clamp=True)
             st.markdown('</div>', unsafe_allow_html=True)
+
+        # ── [+] Visualisasi Matriks Piksel (tambahan media pembelajaran) ──
+        tampilkan_matriks_dasar(
+            img_array, hasil,
+            label_asli="Matriks Citra Asli",
+            label_hasil=f"Matriks Hasil — {pilihan}"
+        )
     else:
         no_image()
 
@@ -962,6 +983,13 @@ elif menu == "➕ Operasi Aritmatika":
             img_lbl(f"Hasil {operasi}")
             st.image(hasil, use_column_width=True, clamp=True)
             st.markdown('</div>', unsafe_allow_html=True)
+
+        # ── [+] Visualisasi Matriks Piksel (tambahan media pembelajaran) ──
+        tampilkan_matriks_dasar(
+            img_array, hasil,
+            label_asli="Matriks Citra Asli",
+            label_hasil=f"Matriks Hasil — {operasi}"
+        )
     else:
         no_image()
 
@@ -989,6 +1017,13 @@ elif menu == "🔣 Operasi Logika":
                 img_lbl("Hasil NOT")
                 st.image(hasil, use_column_width=True, clamp=True)
                 st.markdown('</div>', unsafe_allow_html=True)
+
+            # ── [+] Visualisasi Matriks Piksel (tambahan media pembelajaran) ──
+            tampilkan_matriks_dasar(
+                img_array, hasil,
+                label_asli="Matriks Citra Asli",
+                label_hasil="Matriks Hasil — NOT"
+            )
         else:
             info("Upload gambar kedua untuk operasi <b>AND / OR / XOR</b>")
             image2, img_array2, filename2 = load_gambar(key="upload_gambar_kedua")
@@ -1015,6 +1050,14 @@ elif menu == "🔣 Operasi Logika":
                     img_lbl(f"Hasil {operasi}")
                     st.image(hasil, use_column_width=True, clamp=True)
                     st.markdown('</div>', unsafe_allow_html=True)
+
+                # ── [+] Visualisasi Matriks Tiga Input (tambahan media pembelajaran) ──
+                tampilkan_matriks_dua_input(
+                    img_array, img_array2, hasil,
+                    label1="Matriks Gambar 1",
+                    label2="Matriks Gambar 2",
+                    label_hasil=f"Matriks Hasil — {operasi}"
+                )
     else:
         no_image()
 
@@ -1038,6 +1081,9 @@ elif menu == "📊 Histogram":
             img_lbl("Histogram")
             tampilkan_histogram(img_array)
             st.markdown('</div>', unsafe_allow_html=True)
+
+        # ── [+] Visualisasi Matriks Piksel (tambahan media pembelajaran) ──
+        tampilkan_matriks_histogram(img_array)
     else:
         no_image()
 
@@ -1082,6 +1128,23 @@ elif menu == "🔍 Konvolusi & Filter":
             img_lbl(f"Hasil {filter_pilihan}")
             st.image(hasil, use_column_width=True, clamp=True)
             st.markdown('</div>', unsafe_allow_html=True)
+
+        # ── [+] Visualisasi Matriks & Kernel (tambahan media pembelajaran) ──
+        if filter_pilihan == "Mean (Blur)":
+            _kernel_viz = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size * kernel_size)
+        elif filter_pilihan == "Sharpening Standar":
+            _kernel_viz = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]], dtype=np.float32)
+        elif filter_pilihan == "Sharpening Kuat":
+            _kernel_viz = np.array([[-1,-1,-1],[-1,9,-1],[-1,-1,-1]], dtype=np.float32)
+        elif filter_pilihan == "Edge Detection Sobel":
+            _kernel_viz = np.array([[-1,0,1],[-2,0,2],[-1,0,1]], dtype=np.float32)  # Gx (horizontal)
+        else:
+            _kernel_viz = np.array([[-1,0,1],[-1,0,1],[-1,0,1]], dtype=np.float32)  # Gx (horizontal)
+        # Untuk Sobel/Prewitt: tampilkan kernel Gx + keterangan bahwa hasil = sqrt(Gx²+Gy²)
+        _nama_viz = filter_pilihan
+        if filter_pilihan in ("Edge Detection Sobel", "Edge Detection Prewitt"):
+            _nama_viz = filter_pilihan + " (Kernel Gx — arah horizontal)"
+        tampilkan_matriks_konvolusi(img_array, hasil, _kernel_viz, _nama_viz)
     else:
         no_image()
 
@@ -1122,5 +1185,9 @@ elif menu == "🔷 Operasi Morfologi":
             img_lbl(f"Hasil {operasi_morf} ({se_pilihan})")
             st.image(hasil, use_column_width=True, clamp=True)
             st.markdown('</div>', unsafe_allow_html=True)
+
+        # ── [+] Visualisasi Matriks & SE (tambahan media pembelajaran) ──
+        _se_viz = pilih_se(se_pilihan)
+        tampilkan_matriks_morfologi(img_array, hasil, _se_viz, operasi_morf, se_pilihan)
     else:
         no_image()
