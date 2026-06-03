@@ -15,6 +15,12 @@ def load_gambar():
         # Baca gambar menggunakan PIL
         image = Image.open(uploaded_file)
         
+        # Konversi RGBA ke RGB jika perlu
+        if image.mode == 'RGBA':
+            image = image.convert('RGB')
+        elif image.mode != 'RGB':
+            image = image.convert('RGB')
+        
         # Konversi ke array numpy
         img_array = np.array(image)
         
@@ -25,7 +31,7 @@ def load_gambar():
 def tampilkan_gambar(image, judul="Gambar"):
     """Fungsi untuk menampilkan gambar"""
     if image is not None:
-        st.image(image, caption=judul, use_column_width=True)
+        st.image(image, caption=judul, use_container_width=True)
     else:
         st.warning("Tidak ada gambar yang ditampilkan")
 
