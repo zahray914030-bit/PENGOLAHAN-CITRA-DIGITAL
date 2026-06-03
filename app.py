@@ -9,7 +9,7 @@ from modules.aritmatika_logika import (operasi_penjumlahan, operasi_pengurangan,
                                         operasi_not, operasi_xor)
 from modules.histogram import tampilkan_histogram
 from modules.konvolusi import filter_mean, filter_sharpening, filter_sobel, filter_prewitt
-from modules.morfologi import erosi, dilasi
+from modules.morfologi import erosi, dilasi, opening, closing
 
 # ── Konfigurasi halaman ──────────────────────────────────────────
 st.set_page_config(
@@ -1090,7 +1090,7 @@ elif menu == "🔍 Konvolusi & Filter":
 # ║              HALAMAN: Operasi Morfologi                         ║
 # ╚══════════════════════════════════════════════════════════════════╝
 elif menu == "🔷 Operasi Morfologi":
-    section_head("MORFOLOGI", "Operasi Morfologi", "Transformasi bentuk: Erosi, Dilasi.")
+    section_head("MORFOLOGI", "Operasi Morfologi", "Transformasi bentuk: Erosi, Dilasi, Opening, Closing.")
 
     if img_array is not None:
         col1, col2 = st.columns(2)
@@ -1105,15 +1105,19 @@ elif menu == "🔷 Operasi Morfologi":
             st.markdown('<div class="glass-card">', unsafe_allow_html=True)
             # ── Logika asli TIDAK DIUBAH ──
             operasi_morf = st.selectbox("Pilih Operasi:", [
-                "Erosi", "Dilasi"
+                "Erosi", "Dilasi", "Opening", "Closing"
             ])
             se_pilihan = st.selectbox("Pilih Elemen Penstruktur (SE):", [
                 "silang", "kotak", "diagonal", "vertikal", "horizontal"
             ])
             if operasi_morf == "Erosi":
                 hasil = erosi(img_array, se_pilihan)
-            else:
+            elif operasi_morf == "Dilasi":
                 hasil = dilasi(img_array, se_pilihan)
+            elif operasi_morf == "Opening":
+                hasil = opening(img_array, se_pilihan)
+            else:
+                hasil = closing(img_array, se_pilihan)
 
             img_lbl(f"Hasil {operasi_morf} ({se_pilihan})")
             st.image(hasil, use_column_width=True, clamp=True)
