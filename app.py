@@ -720,7 +720,7 @@ menu = st.sidebar.selectbox("Pilih Fitur:", [
 st.sidebar.markdown('<hr><span class="sb-section-label">✦ Upload Gambar</span>', unsafe_allow_html=True)
 
 # ── Upload gambar (TIDAK DIUBAH) ───────────────────────────────────
-image, img_array, filename = load_gambar()
+image, img_array, filename = load_gambar(key="upload_gambar_utama")
 
 if image is not None:
     st.sidebar.markdown(f"""
@@ -991,7 +991,7 @@ elif menu == "🔣 Operasi Logika":
                 st.markdown('</div>', unsafe_allow_html=True)
         else:
             info("Upload gambar kedua untuk operasi <b>AND / OR / XOR</b>")
-            image2, img_array2, filename2 = load_gambar()
+            image2, img_array2, filename2 = load_gambar(key="upload_gambar_kedua")
             if img_array2 is not None:
                 col1, col2, col3 = st.columns(3)
                 with col1:

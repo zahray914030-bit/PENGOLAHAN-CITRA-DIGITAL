@@ -9,6 +9,7 @@ def load_gambar():
         "Upload Gambar", 
         type=["jpg", "jpeg", "png", "bmp"],
         help="Format yang didukung: JPG, JPEG, PNG, BMP"
+        key=key
     )
     
     if uploaded_file is not None:
